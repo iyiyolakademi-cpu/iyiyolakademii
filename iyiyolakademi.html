@@ -1,0 +1,1428 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>İyi Yol Akademi</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --border:#e5e7eb;
+      --soft:#f8fafc;
+      --card:#ffffff;
+      --shadow: 0 10px 28px rgba(2,6,23,.06);
+      --shadow2: 0 16px 44px rgba(2,6,23,.10);
+      --radius: 18px;
+      --radius2: 26px;
+
+      /* Kapalı ton sarı */
+      --brand: #c7a300;
+      --brand2:#d2b01c;
+      --brandSoft: rgba(199,163,0,.10);
+      --brandBorder: rgba(199,163,0,.28);
+
+      --max: 1200px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    a{ color:inherit; }
+    img, svg{ max-width:100%; }
+
+    .container{
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* ===== HEADER ===== */
+    header{
+      position: sticky;
+      top:0;
+      z-index: 50;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .topRow{ position:relative; }
+
+    .snow{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.14;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(148,163,184,.55) 0 1px, transparent 2px),
+        radial-gradient(circle at 45% 70%, rgba(148,163,184,.45) 0 1px, transparent 2px),
+        radial-gradient(circle at 70% 35%, rgba(148,163,184,.55) 0 1px, transparent 2px),
+        radial-gradient(circle at 86% 68%, rgba(148,163,184,.45) 0 1px, transparent 2px);
+      background-size: 240px 70px;
+      background-repeat: repeat;
+    }
+
+    .navBar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 0;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      min-width: 0;
+    }
+
+    .brandMark{
+      width:42px;
+      height:42px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      border: 1px solid var(--brandBorder);
+      background: linear-gradient(180deg, var(--brandSoft), rgba(199,163,0,.03));
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+      overflow: hidden; /* ✅ resim taşmasın */
+    }
+
+    /* ✅ LOGO İÇİN GEREKLİ DÜZELTME */
+    .logoImg{
+      width: 40px;          /* istersen 30-34 yap */
+      height: 40px;
+      object-fit: contain;
+      display:block;
+      user-select:none;
+    }
+
+    .brandTitle{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      line-height:1.1;
+      min-width: 0;
+    }
+    .brandTitle strong{
+      color: var(--brand);
+      letter-spacing:-.02em;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+    .brandTitle span{
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      min-width: 0;
+    }
+
+    .navLinks{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .navItem{ position:relative; }
+
+    .navBtn{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 13px;
+      cursor:pointer;
+      text-decoration:none;
+      white-space:nowrap;
+      transition: .15s ease;
+    }
+    .navBtn:hover{ background: var(--soft); border-color: var(--border); }
+
+    .navIcon{
+      width:18px;height:18px;
+      display:inline-grid;place-items:center;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .navCaret{
+      width:10px;height:10px;
+      opacity:.65;
+      margin-left:2px;
+      flex:0 0 auto;
+    }
+
+    .dropdown{
+      position:absolute;
+      right:0;
+      top: 46px;
+      width: 260px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow2);
+      padding: 10px;
+      display:none;
+      z-index: 60;
+    }
+    .dropdown a{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 10px;
+      border-radius: 12px;
+      text-decoration:none;
+      color: var(--text);
+      border:1px solid transparent;
+    }
+    .dropdown a:hover{ background: var(--soft); border-color: var(--border); }
+    .dropdown small{
+      display:block;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top:2px;
+      font-size: 12px;
+    }
+    .navItem.open .dropdown{ display:block; }
+
+    .rightTools{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      min-width: 0;
+    }
+
+    .searchMini{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background:#fff;
+      width: clamp(220px, 28vw, 360px);
+      min-width: 0;
+    }
+    .searchMini input{
+      border:none;
+      outline:none;
+      width: 100%;
+      min-width: 0;
+      font-size: 14px;
+    }
+
+    .btnPrimary{
+      border:none;
+      cursor:pointer;
+      background: linear-gradient(180deg, var(--brand), var(--brand2));
+      color:#111827;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight: 950;
+      box-shadow: var(--shadow);
+      transition: .15s ease;
+      white-space:nowrap;
+    }
+    .btnPrimary:hover{ transform: translateY(-1px); }
+
+    .btnGhost{
+      border:1px solid var(--border);
+      background:#fff;
+      padding: 12px 14px;
+      border-radius: 16px;
+      cursor:pointer;
+      font-weight:950;
+      color: var(--text);
+      white-space:nowrap;
+    }
+    .btnGhost:hover{ background: var(--soft); }
+
+    .menuBtn{
+      display:none;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:950;
+    }
+
+    .mobilePanel{ display:none; padding: 0 0 12px; width:100%; }
+    .mobileCard{
+      border:1px solid var(--border);
+      border-radius: 18px;
+      background:#fff;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .mobileCard a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 12px 14px;
+      text-decoration:none;
+      border-top:1px solid var(--border);
+      color: var(--text);
+      font-weight:950;
+    }
+    .mobileCard a:first-child{ border-top:none; }
+    .mobileCard a span{ color: var(--muted); font-weight:800; font-size:13px; }
+
+    /* ===== MAIN ===== */
+    main{ padding: 16px 0 64px; }
+
+    .hero{
+      border: 1px solid var(--border);
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroInner{
+      padding: 20px;
+      min-width:0;
+    }
+    .heroInner h1{
+      margin:0 0 10px;
+      font-size: clamp(26px, 3.1vw, 44px);
+      letter-spacing:-.03em;
+    }
+    .heroInner p{
+      margin:0 0 14px;
+      color: var(--muted);
+      max-width: 72ch;
+      font-size: 15px;
+    }
+    .heroSearch{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .heroSearch .input{
+      flex: 1 1 420px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 12px 14px;
+      border:1px solid var(--border);
+      border-radius: 16px;
+      background:#fff;
+      min-width: 0;
+    }
+    .heroSearch input{
+      border:none; outline:none;
+      width:100%;
+      min-width:0;
+      font-size: 14px;
+    }
+
+    .quickContent{
+      margin-top: 14px;
+      border:1px solid var(--border);
+      border-radius: 18px;
+      background:#fff;
+      box-shadow: var(--shadow);
+      padding: 12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+    .quickContentTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      letter-spacing:-.01em;
+      white-space:nowrap;
+    }
+    .quickDots{
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(199,163,0,.18);
+      border:1px solid var(--brandBorder);
+      box-shadow: 0 6px 18px rgba(2,6,23,.06);
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+    }
+    .chip{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      background:#fff;
+      cursor:pointer;
+      font-weight:950;
+      font-size: 13px;
+      color: var(--text);
+      text-decoration:none;
+      white-space:nowrap;
+      transition:.15s ease;
+    }
+    .chip:hover{
+      background: var(--soft);
+      border-color: var(--brandBorder);
+    }
+
+    .section{ margin-top: 18px; }
+    .sectionHeader{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .sectionHeader h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:-.02em;
+    }
+    .sectionHeader p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      min-width:0;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-width:0;
+    }
+    .cardHead{
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      border-bottom:1px solid var(--border);
+      background:#fff;
+      min-width:0;
+    }
+    .cardHead h3{
+      margin:0;
+      font-size: 15px;
+      letter-spacing:-.01em;
+    }
+    .tag{
+      font-size: 12px;
+      font-weight:950;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background:#fff;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .cardBody{
+      padding: 14px 16px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      min-width:0;
+    }
+
+    .course{ grid-column: span 4; display:flex; flex-direction:column; min-height: 250px; }
+    .courseThumb{
+      height: 110px;
+      border-bottom:1px solid var(--border);
+      background:
+        radial-gradient(600px 140px at 20% 30%, rgba(199,163,0,.18), transparent 55%),
+        radial-gradient(600px 140px at 80% 40%, rgba(14,165,233,.10), transparent 60%),
+        linear-gradient(180deg, #fff, #fbfdff);
+    }
+    .courseTitle{
+      margin: 0;
+      color: var(--text);
+      font-weight: 950;
+      letter-spacing:-.02em;
+      font-size: 15px;
+    }
+    .courseMeta{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top: 8px;
+      color:#64748b;
+      font-weight:900;
+      font-size: 12px;
+    }
+    .courseActions{
+      margin-top:auto;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+    }
+    .btnSmall{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      font-weight:950;
+      font-size: 13px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+      transition:.15s ease;
+    }
+    .btnSmall:hover{ background: var(--soft); }
+    .btnSmall.primary{
+      border:none;
+      background: linear-gradient(180deg, var(--brand), var(--brand2));
+      color:#111827;
+    }
+
+    .span8{ grid-column: span 8; }
+    .span4{ grid-column: span 4; }
+    .span12{ grid-column: span 12; } /* ✅ eklendi */
+
+    .list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .li{
+      padding: 12px;
+      border:1px solid var(--border);
+      border-radius: 16px;
+      background:#fff;
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      transition:.15s ease;
+      min-width:0;
+    }
+    .li:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(2,6,23,.08); }
+    .bullet{
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(199,163,0,.18);
+      border:1px solid var(--brandBorder);
+      margin-top: 6px;
+      flex:0 0 auto;
+    }
+    .li h4{
+      margin:0;
+      color: var(--text);
+      font-size: 14px;
+      letter-spacing:-.01em;
+      word-break: break-word;
+    }
+    .li p{ margin:4px 0 0; color: var(--muted); font-size: 13px; }
+    .meta{
+      margin-top: 8px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      font-size: 12px;
+      color:#64748b;
+      font-weight:900;
+    }
+
+    section{ scroll-margin-top: 96px; }
+
+    footer{
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footerRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 980px){
+      .course{ grid-column: span 6; }
+      .span8, .span4{ grid-column: span 12; }
+      .dropdown{ left:0; right:auto; }
+    }
+    @media (max-width: 780px){
+      .navLinks{ display:none; }
+      .menuBtn{ display:inline-flex; align-items:center; gap:10px; }
+      .mobilePanel.show{ display:block; }
+      .searchMini{ width: min(100%, 420px); }
+    }
+    @media (max-width: 520px){
+      .course{ grid-column: span 12; }
+      .brandTitle strong{ font-size: 16px; }
+      .quickContent{ padding: 10px; }
+    }
+/* Film poster + detay */
+.filmItem{
+  width: 100%;
+  border:1px solid var(--border);
+  border-radius: 16px;
+  background:#fff;
+  overflow:hidden;
+  transition:.15s ease;
+}
+.filmItem:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(2,6,23,.08); }
+
+.filmSummary{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  cursor:pointer;
+  list-style:none;
+  align-items:flex-start;
+}
+.filmSummary::-webkit-details-marker{ display:none; }
+
+.filmPoster{
+  width:78px;
+  height:108px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex:0 0 auto;
+  border:1px solid var(--border);
+}
+
+.filmText{ min-width:0; }
+.filmTitle{ margin:0; color:var(--text); font-size:14px; letter-spacing:-.01em; }
+.filmDesc{ margin:4px 0 0; color:var(--muted); font-size:13px; }
+
+.filmDetails{
+  border-top:1px solid var(--border);
+  padding: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.filmDetails .meta{ margin-top:10px; }
+
+.filmMore{
+  margin-left:auto;
+  font-weight:950;
+  color: var(--text);
+  opacity:.7;
+}
+details[open] .filmMore{ opacity:1; }
+
+/* ===== POMODORO FULLSCREEN ===== */
+#pomodoroView{
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+
+}
+#pomodoroView[hidden]{ display:none !important; }
+
+.pomoWrap{
+  width: min(720px, 100%);
+}
+
+.pomoCard{
+  border:1px solid var(--border);
+  border-radius: 24px;
+  background:#fff;
+  box-shadow: var(--shadow2);
+  padding: 18px;
+}
+
+.pomoTop{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 10px;
+}
+
+.pomoTitle{
+  font-weight: 950;
+  letter-spacing:-.02em;
+  font-size: 18px;
+  color: var(--text);
+}
+.pomoSub{
+  color: var(--muted);
+  font-weight: 900;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.pomoBack{
+  border:1px solid var(--border);
+  background:#fff;
+  padding:10px 12px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight: 950;
+}
+.pomoBack:hover{ background: var(--soft); }
+
+.pomoTimer{
+  text-align:center;
+  font-size: clamp(56px, 9vw, 96px);
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  padding: 18px 10px;
+  border-radius: 18px;
+  border:1px solid var(--border);
+  background: linear-gradient(180deg, #fff, #fbfdff);
+}
+
+.pomoRow{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin-top: 14px;
+  flex-wrap:wrap;
+}
+
+.pomoBtn{
+  border:1px solid var(--border);
+  background:#fff;
+  padding: 12px 16px;
+  border-radius: 16px;
+  cursor:pointer;
+  font-weight: 950;
+  min-width: 140px;
+}
+.pomoBtn:hover{ background: var(--soft); }
+
+.pomoBtn.primary{
+  border:none;
+  background: linear-gradient(180deg, var(--brand), var(--brand2));
+  color:#111827;
+}
+
+.pomoRow.small .pomoChip{
+  border:1px solid var(--border);
+  background:#fff;
+  padding:10px 12px;
+  border-radius: 999px;
+  cursor:pointer;
+  font-weight: 950;
+  font-size: 13px;
+}
+.pomoRow.small .pomoChip:hover{ background: var(--soft); }
+.pomoChip.active{
+  border-color: var(--brandBorder);
+  background: linear-gradient(180deg, var(--brandSoft), rgba(199,163,0,.03));
+}
+
+.pomoNote{
+  margin-top: 14px;
+  text-align:center;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="topRow">
+    <div class="snow" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="navBar">
+        <!-- Brand -->
+        <a class="brand" href="#top" aria-label="Ana sayfa">
+          <div class="brandMark" aria-hidden="true">
+            <!-- logo.png dosyası index.html ile aynı klasörde olmalı -->
+<img src="images/logo.png" alt="İyi Yol Akademi Logo" class="logoImg">
+          </div>
+
+          <div class="brandTitle">
+            <strong>İYİ YOL AKADEMİ</strong>
+            <span>Eğitim • Blog • Kültür</span>
+          </div>
+        </a>
+
+        <!-- Nav -->
+        <nav aria-label="Üst menü">
+          <div class="navLinks" id="navLinks">
+            <div class="navItem">
+              <a class="navBtn" href="#hakkimizda" data-dd="dd-about">
+                <span class="navIcon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="#0f172a" stroke-width="2"/>
+                    <path d="M4 20c1.5-4 14.5-4 16 0" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                HAKKIMIZDA
+                <svg class="navCaret" viewBox="0 0 10 10" aria-hidden="true">
+                  <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <div class="dropdown" id="dd-about" role="menu">
+                <a href="#hakkimizda"><b>Biz Kimiz?</b><small>Misyon, vizyon ve ekip</small></a>
+                <a href="#yazarlar"><b>Yazarlarımız</b><small>Katkı sağlayanlar</small></a>
+                <a href="#iletisim"><b>İletişim</b><small>Sor, yaz, öner</small></a>
+              </div>
+            </div>
+
+            <div class="navItem">
+              <a class="navBtn" href="#kurslar" data-dd="dd-academy">
+                <span class="navIcon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 7l9-4 9 4-9 4-9-4Z" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M6 10v6c3 3 9 3 12 0v-6" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                AKADEMİ
+                <svg class="navCaret" viewBox="0 0 10 10" aria-hidden="true">
+                  <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <div class="dropdown" id="dd-academy" role="menu">
+                <a href="#kurslar"><b>Kurslar</b><small>Video + uygulama</small></a>
+                <a href="#icerikler"><b>İçerikler</b><small>Blog, podcast, film</small></a>
+                <a href="#sertifika"><b>Sertifika</b><small>Rozetler ve programlar</small></a>
+              </div>
+            </div>
+
+            <div class="navItem">
+              <a class="navBtn" href="#yazarlar">
+                <span class="navIcon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 20h16" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M7 17V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10" stroke="#0f172a" stroke-width="2"/>
+                  </svg>
+                </span>
+                YAZARLARIMIZ
+              </a>
+            </div>
+
+            <div class="navItem">
+              <a class="navBtn" href="#edebiyat" data-dd="dd-edebiyat">
+                <span class="navIcon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 5h12a4 4 0 0 1 4 4v10H8a4 4 0 0 0-4 4V5Z" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M8 7h8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 11h8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                EDEBİYAT KÖŞESİ
+                <svg class="navCaret" viewBox="0 0 10 10" aria-hidden="true">
+                  <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <div class="dropdown" id="dd-edebiyat" role="menu">
+                <a href="#blog"><b>Blog Yazıları</b><small>Deneme, inceleme, eleştiri</small></a>
+                <a href="#podcastler"><b>Podcastler</b><small>Okuma & yazma sohbetleri</small></a>
+                <a href="#film"><b>Film Önerileri</b><small>Seçili öneriler</small></a>
+              </div>
+            </div>
+
+            <div class="navItem">
+              <a class="navBtn" href="#e-dergi" data-dd="dd-mag">
+                <span class="navIcon" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 4h12v16H6a3 3 0 0 0-3 3V7a3 3 0 0 1 3-3Z" stroke="#0f172a" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M8 8h8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 12h8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                E-DERGİ
+                <svg class="navCaret" viewBox="0 0 10 10" aria-hidden="true">
+                  <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <div class="dropdown" id="dd-mag" role="menu">
+                <a href="#e-dergi"><b>Son Sayı</b><small>PDF / Online okuma</small></a>
+                <a href="#arsiv"><b>Arşiv</b><small>Geçmiş sayılar</small></a>
+                <a href="#katil"><b>Katkı Gönder</b><small>Yazı & şiir gönder</small></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="rightTools">
+            <div class="searchMini" aria-label="Hızlı arama">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#0f172a" stroke-width="2"/>
+                <path d="M16.5 16.5 21 21" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <input id="miniSearch" placeholder="Kurs, yazı veya yazar ara…" />
+            </div>
+
+            <button class="btnPrimary" onclick="document.getElementById('kurslar').scrollIntoView({behavior:'smooth'})">
+              Kurslar
+            </button>
+<button class="btnGhost" id="pomodoroBtn" type="button">
+  ⏱ Pomodoro
+</button>
+
+            <button class="menuBtn" id="menuBtn" aria-expanded="false" aria-controls="mobilePanel">☰ Menü</button>
+          </div>
+        </nav>
+
+        <div class="mobilePanel" id="mobilePanel">
+          <div class="mobileCard">
+            <a href="#hakkimizda">Hakkımızda <span>Biz kimiz?</span></a>
+            <a href="#kurslar">Akademi <span>Kurslar</span></a>
+            <a href="#icerikler">İçerikler <span>Blog/Podcast</span></a>
+            <a href="#edebiyat">Edebiyat <span>Köşe</span></a>
+            <a href="#e-dergi">E-Dergi <span>Arşiv</span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="container">
+
+    <div class="hero">
+      <div class="heroInner">
+        <h1>Akademi + Kültür içerikleri<br/>tek çatı altında.</h1>
+        <p>
+          Kurslar, blog yazıları, podcastler ve seçili film önerileri.
+          Hedef: düzenli öğrenme + kaliteli içerik arşivi.
+        </p>
+
+        <div class="heroSearch" aria-label="Ana arama">
+          <div class="input">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#0f172a" stroke-width="2"/>
+              <path d="M16.5 16.5 21 21" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input id="mainSearch" placeholder="Örn: 'HTML', 'Diksiyon', 'Roman inceleme'..." />
+          </div>
+          <button class="btnPrimary" id="searchBtn">Ara</button>
+          <button class="btnGhost" onclick="document.getElementById('icerikler').scrollIntoView({behavior:'smooth'})">İçerikler</button>
+        </div>
+
+        <div class="quickContent" id="icerikler" aria-label="İçerikler hızlı erişim">
+          <div class="quickContentTitle">
+            <span class="quickDots" aria-hidden="true"></span>
+            İçerikler
+          </div>
+          <div class="chips">
+           <a class="chip" href="liste.html?type=blog">📝 Blog</a>
+<a class="chip" href="liste.html?type=film">🎬 Film</a>
+<a class="chip" href="liste.html?type=podcast">🎙️ Podcast</a>
+<a class="chip" href="liste.html?type=course">🎓 Kurs</a>
+<a class="chip" href="liste.html?type=author">✍️ Yazarlar</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KURSLAR -->
+    <section class="section" id="kurslar" aria-label="Kurslar">
+      <div class="sectionHeader">
+        <div>
+          <h2>Öne Çıkan Kurslar</h2>
+          <p>Gerçek projeler + anlaşılır anlatım.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <article class="card course">
+          <div class="courseThumb"></div>
+          <div class="cardBody">
+            <h3 class="courseTitle">HTML & CSS Temelleri</h3>
+            <div class="courseMeta"><span>⏱ 3s 20d</span><span>📦 8 modül</span><span>🏁 Başlangıç</span></div>
+            <p>Modern, temiz bir web sayfası kur. Responsive mantığını öğren.</p>
+            <div class="courseActions">
+              <a class="btnSmall primary" href="#kurslar">Kursa Git</a>
+              <a class="btnSmall" href="#hakkimizda">Detay</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card course">
+          <div class="courseThumb"></div>
+          <div class="cardBody">
+            <h3 class="courseTitle">JavaScript Pratik Atölyesi</h3>
+            <div class="courseMeta"><span>⏱ 5s</span><span>🧩 10 modül</span><span>🚀 Orta</span></div>
+            <p>Mini uygulamalarla DOM, event, fetch ve localStorage.</p>
+            <div class="courseActions">
+              <a class="btnSmall primary" href="#kurslar">Kursa Git</a>
+              <a class="btnSmall" href="#kurslar">Müfredat</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card course">
+          <div class="courseThumb"></div>
+          <div class="cardBody">
+            <h3 class="courseTitle">Etkili Yazma & İçerik Üretimi</h3>
+            <div class="courseMeta"><span>⏱ 2s 10d</span><span>📝 6 modül</span><span>🌿 Her seviye</span></div>
+            <p>Başlık, akış, üslup, edit ve yayınlama rutini.</p>
+            <div class="courseActions">
+              <a class="btnSmall primary" href="#kurslar">Kursa Git</a>
+              <a class="btnSmall" href="#yazarlar">Eğitmen</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BLOG + PODCAST -->
+    <section class="section grid" aria-label="İçerikler listesi">
+      <div class="card span8" id="blog">
+        <div class="cardHead">
+          <h3>Blog Yazıları</h3>
+          <span class="tag">Güncel</span>
+        </div>
+        <div class="cardBody">
+       <div style="display:flex; flex-direction:column; gap:10px;">
+  <!-- Film 1 -->
+  <details class="filmItem">
+    <summary class="filmSummary">
+      <img class="filmPoster" src="images/interstellar.jpg" alt="Interstellar Poster">
+      <div class="filmText">
+        <h4 class="filmTitle">Interstellar</h4>
+        <p class="filmDesc">Bilim kurgu • güçlü final.</p>
+        <div class="meta"><span>⭐ 9/10</span><span>🎬 2014</span></div>
+      </div>
+      <span class="filmMore">Detay ▾</span>
+    </summary>
+
+    <div class="filmDetails">
+      <p style="margin:0 0 8px;">
+        <b>Konu:</b> İnsanlığın geleceği için uzayın derinliklerine yapılan bir yolculuk.
+      </p>
+      <p style="margin:0 0 8px;">
+        <b>Neden öneriyoruz?</b> Görsellik + müzik + hikâye birleşimi çok güçlü.
+      </p>
+      <div class="meta">
+        <span>⏱ 169 dk</span>
+        <span>🎭 Dram / Sci-Fi</span>
+        <span>👤 Yönetmen: Christopher Nolan</span>
+      </div>
+    </div>
+  </details>
+
+  <!-- Film 2 -->
+  <details class="filmItem">
+    <summary class="filmSummary">
+      <img class="filmPoster" src="images/parasite.jpg" alt="Parasite Poster">
+      <div class="filmText">
+        <h4 class="filmTitle">Parasite</h4>
+        <p class="filmDesc">Dram/gerilim • sınıf çatışması.</p>
+        <div class="meta"><span>⭐ 9/10</span><span>🎬 2019</span></div>
+      </div>
+      <span class="filmMore">Detay ▾</span>
+    </summary>
+
+    <div class="filmDetails">
+      <p style="margin:0 0 8px;">
+        <b>Konu:</b> İki aile üzerinden sınıf farklarının gerilimli bir anlatımı.
+      </p>
+      <p style="margin:0 0 8px;">
+        <b>Neden öneriyoruz?</b> Mizah + gerilim dengesi ve sürprizli akış.
+      </p>
+      <div class="meta">
+        <span>⏱ 132 dk</span>
+        <span>🎭 Dram / Gerilim</span>
+        <span>👤 Yönetmen: Bong Joon-ho</span>
+      </div>
+    </div>
+  </details>
+</div>
+
+        </div>
+      </div>
+
+      <div class="card span4" id="podcastler">
+        <div class="cardHead">
+          <h3>Podcastler</h3>
+          <span class="tag">Dinle</span>
+        </div>
+        <div class="cardBody">
+          <ul class="list">
+            <li class="li">
+              <span class="bullet"></span>
+              <div>
+                <h4>Bölüm #12: Disiplin mi Sistem mi?</h4>
+                <p>Rutin kurma ve sürdürülebilir öğrenme.</p>
+                <div class="meta"><span>🎧 28 dk</span><span>📅 10 Şub</span></div>
+              </div>
+            </li>
+            <li class="li">
+              <span class="bullet"></span>
+              <div>
+                <h4>Bölüm #05: Yazı Yazma Alışkanlığı</h4>
+                <p>Kısa pratikler ve örnekler.</p>
+                <div class="meta"><span>🎧 22 dk</span><span>📅 21 Oca</span></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILM + YAZARLAR -->
+    <section class="section grid" aria-label="Film ve Yazarlar">
+      <div class="card span4" id="film">
+        <div class="cardHead">
+          <h3>Film Önerileri</h3>
+          <span class="tag">Seçki</span>
+        </div>
+        <div class="cardBody">
+          <ul class="list">
+            <li class="li">
+              <span class="bullet"></span>
+              <div>
+                <h4>Interstellar</h4>
+                <p>Bilim kurgu • güçlü final.</p>
+                <div class="meta"><span>⭐ 9/10</span><span>🎬 2014</span></div>
+              </div>
+            </li>
+            <li class="li">
+              <span class="bullet"></span>
+              <div>
+                <h4>Parasite</h4>
+                <p>Dram/gerilim • sınıf çatışması.</p>
+                <div class="meta"><span>⭐ 9/10</span><span>🎬 2019</span></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card span8" id="yazarlar">
+        <div class="cardHead">
+          <h3>Yazarlarımız</h3>
+          <span class="tag">Ekip</span>
+        </div>
+        <div class="cardBody">
+          <div class="grid" style="gap:12px;">
+            <div class="card" style="grid-column:span 6;">
+              <div class="cardBody">
+                <h4 style="margin:0;color:var(--text);font-size:14px;letter-spacing:-.01em;">Ayşe Y.</h4>
+                <p style="margin:6px 0 0;">Verimlilik, öğrenme, yazma. Haftalık içerik seçkileri.</p>
+                <div class="meta"><span>📝 12 yazı</span><span>🎙️ 3 bölüm</span></div>
+              </div>
+            </div>
+            <div class="card" style="grid-column:span 6;">
+              <div class="cardBody">
+                <h4 style="margin:0;color:var(--text);font-size:14px;letter-spacing:-.01em;">Mehmet K.</h4>
+                <p style="margin:6px 0 0;">Film analizi, teknoloji kültürü. Öneri listeleri.</p>
+                <div class="meta"><span>📝 7 yazı</span><span>🎬 15 öneri</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / EDEBİYAT / E-DERGİ -->
+    <section class="section grid">
+      <div class="card span4" id="hakkimizda">
+        <div class="cardHead"><h3>Hakkımızda</h3><span class="tag">Kısa</span></div>
+        <div class="cardBody">
+İyi Yol Akademi, kapsamlı bir gelişim ağı oluşturmak amacıyla kuruldu.
+Birçok gelişim aracını tek çatı altında toplayarak öğrenmeyi daha erişilebilir ve sürdürülebilir hale getiriyoruz.
+
+Mobil uygulamamız Google Play ve App Store’da yayında.
+1.000+ indirme ile büyümeye ve katkı sunmaya devam ediyoruz.        </div>
+      </div>
+
+      <div class="card span4" id="edebiyat">
+        <div class="cardHead"><h3>Edebiyat Köşesi</h3><span class="tag">Okuma</span></div>
+        <div class="cardBody">
+          Deneme, eleştiri, inceleme ve okuma notları.
+        </div>
+      </div>
+
+      <div class="card span4" id="e-dergi">
+        <div class="cardHead"><h3>E-Dergi</h3><span class="tag">Yayın</span></div>
+        <div class="cardBody">
+          Son sayı, arşiv ve katkı gönderme alanı.
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid">
+      <div class="card span12" id="sertifika">
+        <div class="cardHead"><h3>Sertifika</h3><span class="tag">Yakında</span></div>
+        <div class="cardBody">
+          Kurs bitirince rozet / sertifika sistemi ekleyebiliriz.
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footerRow">
+      <div>© <span id="year"></span> İyi Yol Akademi</div>
+      <div id="arsiv">Arşiv • Gizlilik • Şartlar</div>
+      <div id="katil">E-posta: iyiyolakademi@gmail.com</div>
+    </div>
+  </div>
+
+</footer>
+<!-- ===== POMODORO VIEW (FULLSCREEN) ===== -->
+
+<section id="pomodoroView" aria-label="Pomodoro" hidden>
+  <div class="pomoWrap">
+    <div class="pomoCard">
+      <div class="pomoTop">
+        <div>
+          <div class="pomoTitle">Pomodoro</div>
+          <div class="pomoSub" id="pomoModeLabel">Çalışma</div>
+        </div>
+
+        <button class="pomoBack" id="pomoBackBtn" type="button">← Siteye Dön</button>
+      </div>
+
+      <div class="pomoTimer" id="pomoTime">25:00</div>
+
+      <div class="pomoRow">
+        <button class="pomoBtn primary" id="pomoStartPause" type="button">Başlat</button>
+        <button class="pomoBtn" id="pomoReset" type="button">Sıfırla</button>
+      </div>
+
+      <div class="pomoRow small">
+        <button class="pomoChip active" data-mode="work" type="button">Çalışma (25)</button>
+        <button class="pomoChip" data-mode="short" type="button">Kısa Mola (5)</button>
+        <button class="pomoChip" data-mode="long" type="button">Uzun Mola (15)</button>
+      </div>
+
+      <div class="pomoNote">
+        İpucu: 4 pomodoro sonrası “Uzun Mola” yap 🙂
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Dropdowns (desktop)
+  const navItems = document.querySelectorAll(".navItem");
+  function closeAll(){ navItems.forEach(i => i.classList.remove("open")); }
+
+  navItems.forEach(item => {
+    const btn = item.querySelector("[data-dd]");
+    const ddId = btn?.getAttribute("data-dd");
+    const dd = ddId ? document.getElementById(ddId) : null;
+    if(!btn || !dd) return;
+
+    item.addEventListener("mouseenter", () => { closeAll(); item.classList.add("open"); });
+    item.addEventListener("mouseleave", () => { item.classList.remove("open"); });
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const isOpen = item.classList.contains("open");
+      closeAll();
+      item.classList.toggle("open", !isOpen);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    const inside = e.target.closest(".navItem");
+    if(!inside) closeAll();
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById("menuBtn");
+  const mobilePanel = document.getElementById("mobilePanel");
+  menuBtn?.addEventListener("click", () => {
+    const isOpen = mobilePanel.classList.toggle("show");
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+  mobilePanel?.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => {
+      mobilePanel.classList.remove("show");
+      menuBtn.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  // Search demo
+  function doSearch(q){
+    q = (q || "").trim().toLowerCase();
+    if(!q) return alert("Aramak için bir şey yaz 🙂");
+    alert("Demo arama: " + q);
+  }
+  document.getElementById("searchBtn")?.addEventListener("click", () => doSearch(document.getElementById("mainSearch").value));
+  document.getElementById("mainSearch")?.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){ e.preventDefault(); doSearch(e.target.value); }
+  });
+  document.getElementById("miniSearch")?.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){ e.preventDefault(); doSearch(e.target.value); }
+  });
+// ===== POMODORO LOGIC =====
+const pomodoroBtn = document.getElementById("pomodoroBtn");
+const pomodoroView = document.getElementById("pomodoroView");
+pomodoroView.hidden = true;
+const pomoBackBtn = document.getElementById("pomoBackBtn");
+const pomoTimeEl = document.getElementById("pomoTime");
+const pomoStartPause = document.getElementById("pomoStartPause");
+const pomoReset = document.getElementById("pomoReset");
+const pomoModeLabel = document.getElementById("pomoModeLabel");
+const modeButtons = document.querySelectorAll(".pomoChip");
+
+// Sayfada gizlenecek alanlar
+const headerEl = document.querySelector("header");
+const mainEl = document.querySelector("main");
+const footerEl = document.querySelector("footer");
+
+const MODES = {
+  work: { label: "Çalışma", minutes: 25 },
+  short: { label: "Kısa Mola", minutes: 5 },
+  long: { label: "Uzun Mola", minutes: 15 }
+};
+
+let currentMode = "work";
+let remainingSeconds = MODES[currentMode].minutes * 60;
+let timer = null;
+let isRunning = false;
+
+function formatTime(sec){
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+}
+
+function render(){
+  pomoTimeEl.textContent = formatTime(remainingSeconds);
+  pomoModeLabel.textContent = MODES[currentMode].label;
+  pomoStartPause.textContent = isRunning ? "Duraklat" : "Başlat";
+}
+
+function setMode(mode){
+  currentMode = mode;
+  stopTimer();
+  remainingSeconds = MODES[mode].minutes * 60;
+  modeButtons.forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
+  render();
+}
+
+function tick(){
+  if(remainingSeconds > 0){
+    remainingSeconds--;
+    render();
+    return;
+  }
+  stopTimer();
+  pomoModeLabel.textContent = MODES[currentMode].label + " bitti ✅";
+}
+
+function startTimer(){
+  if(timer) return;
+  isRunning = true;
+  timer = setInterval(tick, 1000);
+  render();
+}
+
+function stopTimer(){
+  isRunning = false;
+  if(timer){
+    clearInterval(timer);
+    timer = null;
+  }
+  render();
+}
+
+function toggleTimer(){
+  if(isRunning) stopTimer();
+  else startTimer();
+}
+
+function resetTimer(){
+  stopTimer();
+  remainingSeconds = MODES[currentMode].minutes * 60;
+  render();
+}
+
+function openPomodoro(){
+  headerEl.hidden = true;
+  mainEl.hidden = true;
+  footerEl.hidden = true;
+
+  pomodoroView.hidden = false;
+  document.body.style.overflow = "hidden";
+  render();
+}
+
+function closePomodoro(){
+  pomodoroView.hidden = true;
+
+  headerEl.hidden = false;
+  mainEl.hidden = false;
+  footerEl.hidden = false;
+
+  document.body.style.overflow = "";
+  stopTimer();
+
+}
+
+// Events
+pomodoroBtn?.addEventListener("click", openPomodoro);
+pomoBackBtn?.addEventListener("click", closePomodoro);
+pomoStartPause?.addEventListener("click", toggleTimer);
+pomoReset?.addEventListener("click", resetTimer);
+
+modeButtons.forEach(btn => {
+  btn.addEventListener("click", () => setMode(btn.dataset.mode));
+});
+
+render();
+
+</script>
+</body>
+</html>

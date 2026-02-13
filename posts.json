@@ -1,0 +1,43 @@
+[
+  {
+    "type": "blog",
+    "title": "Öğrenme Planı Nasıl Yapılır?",
+    "excerpt": "Haftalık hedef, tekrar ve ölçümleme için pratik bir sistem.",
+    "date": "2026-02-13",
+    "readMinutes": 6,
+    "category": "Eğitim",
+    "author": "Ayşe Y.",
+    "slug": "ogrenme-plani",
+    "contentHtml": "<p>Buraya yazının tam içeriği gelecek.</p><h3>1) Hedef</h3><p>...</p>"
+  },
+  {
+    "type": "blog",
+    "title": "Yeni Başlayanlar İçin Web Yol Haritası",
+    "excerpt": "HTML → CSS → JS → mini proje → portfolyo yaklaşımı.",
+    "date": "2026-01-25",
+    "readMinutes": 7,
+    "category": "Teknoloji",
+    "author": "Mehmet K.",
+    "slug": "web-yol-haritasi",
+    "contentHtml": "<p>Bu yazıda web öğrenme sırası...</p>"
+  },
+  {
+    "type": "podcast",
+    "title": "Bölüm #12: Disiplin mi Sistem mi?",
+    "excerpt": "Rutin kurma ve sürdürülebilir öğrenme.",
+    "date": "2026-02-10",
+    "durationMin": 28,
+    "category": "Gelişim",
+    "slug": "podcast-12",
+    "audioUrl": "https://example.com/podcast-12.mp3"
+  },
+  {
+    "type": "film",
+    "title": "Interstellar",
+    "excerpt": "Bilim kurgu • güçlü final.",
+    "date": "2014-11-07",
+    "category": "Bilim Kurgu",
+    "slug": "interstellar",
+    "imdb": 8.7
+  }
+]

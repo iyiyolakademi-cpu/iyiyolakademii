@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>İçerikler • İyi Yol Akademi</title>
+  <style>
+    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial;background:#fff;color:#0f172a}
+    .container{width:min(1100px,calc(100% - 32px));margin:24px auto}
+    a{color:inherit}
+    .top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .btn{padding:10px 12px;border:1px solid #e5e7eb;border-radius:14px;background:#fff;text-decoration:none;font-weight:900}
+    h1{margin:0;font-size:28px;letter-spacing:-.02em}
+    .muted{color:#475569}
+    .list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
+    .li{border:1px solid #e5e7eb;border-radius:16px;padding:12px;display:flex;gap:12px}
+    .dot{width:10px;height:10px;border-radius:999px;background:rgba(199,163,0,.2);border:1px solid rgba(199,163,0,.35);margin-top:6px;flex:0 0 auto}
+    .meta{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;color:#64748b;font-weight:800;font-size:12px}
+    .titleLink{text-decoration:none;font-weight:950}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">
+      <div>
+        <h1 id="pageTitle">İçerikler</h1>
+        <div class="muted" id="pageDesc">Filtrelenmiş liste</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="index.html">← Ana Sayfa</a>
+        <a class="btn" href="liste.html?type=blog">Blog</a>
+        <a class="btn" href="liste.html?type=podcast">Podcast</a>
+        <a class="btn" href="liste.html?type=film">Film</a>
+      </div>
+    </div>
+
+    <ul class="list" id="list"></ul>
+  </div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const type = (params.get("type") || "blog").toLowerCase();
+
+  const typeLabel = {
+    blog: "Blog Yazıları",
+    podcast: "Podcastler",
+    film: "Film Önerileri",
+    course: "Kurslar",
+    author: "Yazarlarımız"
+  };
+
+  document.getElementById("pageTitle").textContent = typeLabel[type] || "İçerikler";
+  document.getElementById("pageDesc").textContent = "Sadece “" + (typeLabel[type] || type) + "” gösteriliyor.";
+
+  function formatTR(iso){
+    const d = new Date(iso);
+    return d.toLocaleDateString("tr-TR", { day:"2-digit", month:"short", year:"numeric" });
+  }
+
+  async function load(){
+    const res = await fetch("posts.json");
+    const posts = await res.json();
+
+    const filtered = posts
+      .filter(p => (p.type || "").toLowerCase() === type)
+      .sort((a,b)=> new Date(b.date) - new Date(a.date));
+
+    const ul = document.getElementById("list");
+
+    if(filtered.length === 0){
+      ul.innerHTML = `<li class="li"><span class="dot"></span><div><b>Henüz içerik yok.</b><div class="meta">posts.json içine yeni içerik ekleyince burada gözükecek.</div></div></li>`;
+      return;
+    }
+
+    ul.innerHTML = filtered.map(p => {
+      const metaParts = [];
+      if(p.readMinutes) metaParts.push(`⏱ ${p.readMinutes} dk`);
+      if(p.durationMin) metaParts.push(`🎧 ${p.durationMin} dk`);
+      if(p.category) metaParts.push(`🏷️ ${p.category}`);
+      if(p.date) metaParts.push(`📅 ${formatTR(p.date)}`);
+
+      const href = (type === "blog") ? `post.html?slug=${encodeURIComponent(p.slug)}` : `post.html?slug=${encodeURIComponent(p.slug)}`;
+      return `
+        <li class="li">
+          <span class="dot"></span>
+          <div>
+            <a class="titleLink" href="${href}">${p.title}</a>
+            <div class="muted" style="margin-top:4px">${p.excerpt || ""}</div>
+            <div class="meta">${metaParts.map(x=>`<span>${x}</span>`).join("")}</div>
+          </div>
+        </li>
+      `;
+    }).join("");
+  }
+
+  load();
+</script>
+</body>
+</html>
